@@ -1,0 +1,45 @@
+
+{
+    "builders": [{
+        "type": "amazon-ebs",
+        "access_key": "{{user `aws_access_key`}}",
+        "secret_key": "{{user `aws_secret_key`}}",
+        "region": "us-east-1",
+        "source_ami": "ami-0bcc094591f354be2",
+        "instance_type": "t2.micro",
+        "ssh_username": "ubuntu",
+        "ami_name": "example-ami-packer",
+        "force_deregister": true
+    }],
+    "_comment": "Running Ansible roles on the image",
+    "provisioners": [
+      {
+        "type": "shell",
+        "script": "scripts/ansible.sh"
+      },
+      {
+        "type": "ansible-local",
+        "playbook_file": "../ansible/site.yml",
+        "role_paths": [
+          "../ansible/roles/djangocms",
+          "../ansible/roles/gunicorn",
+          "../ansible/roles/supervisor",
+          "../ansible/roles/nginx"
+        ],
+        "group_vars": "../ansible/group_vars"
+      },
+      {
+        "type": "shell",
+        "script": "scripts/cleanup.sh"
+      }
+    ],
+    "post-processors": [
+      [
+        {
+          "output": "manifest.json",
+          "strip_path": true,
+          "type": "manifest"
+        }
+      ]
+    ]
+}

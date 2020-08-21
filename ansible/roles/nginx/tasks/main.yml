@@ -1,0 +1,27 @@
+- name: Instalando nginx no servidor
+  apt:
+    name: nginx
+    state: present
+
+- name: Removendo arquivo default do nginx
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Criando o template do DjangoCMS para o Nginx
+  template:
+    src: templates/cms.conf.j2
+    dest: /app/cms.conf
+
+- name: Criando link simbolico para arquivo de configuracao do nginx
+  file:
+    src: /app/cms.conf
+    dest: /etc/nginx/sites-enabled/cms.conf
+    state: link
+
+- name: Restart no Nginx
+  service: 
+    name=nginx
+    state=restarted
+    enabled=yes
+

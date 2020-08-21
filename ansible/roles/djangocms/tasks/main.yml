@@ -1,0 +1,32 @@
+---
+- name: Instalando o djangoCMS via pip
+  pip:
+    name: 
+      - djangocms-installer
+      - django-cms
+
+- name: Upgrade do djangoCMS e upgrade do CMS
+  pip:
+    name: django-cms
+    version: 3.7.4
+    extra_args: --upgrade
+
+- name: Incluindo a variavel de ambiente para o pacote do django-cms
+  shell: echo $PATH
+  environment:
+    PATH: "/usr/local/bin:{{  ansible_env.PATH}}"
+
+- name: Criando diretorio para app
+  file:
+    path: /app
+    state: directory
+
+- name: Criando o site com DjangoCMS
+  shell: djangocms -p . djangocms
+  args:
+   chdir: /app/
+
+- name: Importando arquivos estaticos do CMS
+  shell: python manage.py collectstatic
+  args:
+   chdir: /app/

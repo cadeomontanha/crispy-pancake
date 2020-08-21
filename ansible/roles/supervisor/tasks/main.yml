@@ -1,0 +1,29 @@
+---
+- name: Instalando o supervisor
+  apt:
+    name: supervisor
+    state: present
+
+- name: Criando arquivo do supervisord para gunicorn
+  copy:
+    src: files/supervisord.conf
+    dest: /app/supervisord.conf
+
+- name: Criando link simbolico para a pasta do Supervisord
+  file:
+    src: /app/supervisord.conf
+    dest: /etc/supervisor/conf.d/supervisord.conf
+    state: link
+
+- name: Criando o diretoria de logs para uso do supervisor
+  file:
+    path: /var/log/djangocms
+    state: directory
+
+- name: Criando um arquivo para logs
+  file:
+    path: /var/log/djangocms/djangocms.log
+    state: touch
+
+- name: Realizando start do CMS na porta local com o Gunicorn e Supervisor
+  shell: supervisorctl reload && supervisorctl start all

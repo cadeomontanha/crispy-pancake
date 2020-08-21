@@ -1,0 +1,5 @@
+---
+- name: Instalando o djangoCMS via pip
+  pip:
+    name:
+      - gunicorn
