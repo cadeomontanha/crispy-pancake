@@ -6,7 +6,7 @@ resource "aws_instance" "ec2" {
   vpc_security_group_ids = [aws_security_group.sg.id]
   key_name = "gigaops"
   tags = {
-    Name = var.stack-django-cms
+    Name = "Stack Django CMS"
   }
 }
 
