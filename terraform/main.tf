@@ -10,6 +10,7 @@ resource "aws_instance" "ec2" {
   }
 }
 
+data "aws_caller_identity" "current" {}
 
 data "aws_ami" "packer_image" {
   most_recent = true
@@ -23,6 +24,6 @@ data "aws_ami" "packer_image" {
     name   = "virtualization-type"
     values = ["hvm"]
   }
+  owners = [data.aws_caller_identity.current.account_id]
 
-  owners = ["919315413656"] # Canonical
 }
