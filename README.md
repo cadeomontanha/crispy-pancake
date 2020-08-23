@@ -68,7 +68,7 @@ packer build template.json
 
 cd ../terraform 
 
-terraform init; terraform plan; terraform apply -auto-approve;
+terraform init; terraform plan; terraform apply --auto-approve;
 
 ```
 
@@ -79,7 +79,6 @@ A execução dos scripts acima farão a criação de uma imagem em sua conta na 
 O terraform vai retornar 3 outputs, trazendo pra você a informação de qual é o IP Externo da sua instância:
 
 ```
-Login-with-Key = ssh -i terraform-key ubuntu@x.x.x.x
 curl = curl http://x.x.x.x
 publicIp = x.x.x.x
 
@@ -100,7 +99,7 @@ You will have to destroy created infrastructure in order to avoid any changes fr
 
 cd crispy-pancake/terraform
 
-terraform destroy -auto-approve
+terraform destroy --auto-approve
 
 aws ec2 deregister-image --image-id <image-id> (Essa informação é repassada pelo Packer )
 
@@ -112,7 +111,3 @@ aws ec2 delete-snapshot --snapshot-id <snapshot-id> (Será necessário ir na Con
 
 Pra evitar quaisquer cobranças indevidas é importante entrar no seu painel da AWS > EC2 e verificar se as instâncias foram realmente excluídas. 
 ### Importante: Verifique se está na região correta
-
-
-Ref:  `https://github.com/alkrauss48/ansible-packer-terraform-demo`
-

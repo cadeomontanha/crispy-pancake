@@ -11,13 +11,13 @@ variable "stack" {
 
 variable "vpc_cidr" {
     description = "CIDR of the VPC"
-    default = "10.0.0.0/16"
+    default = "10.1.0.0/16"
 }
 
 variable "subnet_cidr" {
     description = "Subnet CIDR blocks"
-    type = "list"
-    default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24", "10.0.4.0/24"]
+    type = list
+    default = ["10.1.1.0/24", "10.1.2.0/24", "10.1.3.0/24", "10.1.4.0/24"]
 }
 
 variable "instances" {
@@ -38,11 +38,11 @@ variable "ssh_key" {
 variable "sg_source" {
     default = ["0.0.0.0/0"]
     description = "source cidr for sg"
-    type = "list"
+    type = list
 }
 
 variable "port_number" {
   description = "Remote tcp port to be used for access to the vms created via the nsg applied to the nics."
   default = ["22","3000","9090","9093","8080","80"]
-  type = "list"
+  type = list
 }
