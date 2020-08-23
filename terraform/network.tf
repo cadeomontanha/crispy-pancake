@@ -4,7 +4,7 @@ resource "aws_vpc" "vpc" {
   cidr_block = var.vpc_cidr
 
 tags = {
-    Name = var.stack-vpc
+    Name = "Vpc Terraform"
   }
 }
 
@@ -19,7 +19,7 @@ resource "aws_internet_gateway" "igw" {
     vpc_id = aws_vpc.vpc.id
 
     tags = {
-     Name = var.stack-igw
+     Name = "Igw Terraform"
     }
 }
 
@@ -27,7 +27,7 @@ resource "aws_eip" "eip" {
     vpc = true
 
     tags = {
-        Name = var.stack-nat-eip
+        Name = "Eip Terraform"
     }
 }
 
@@ -40,7 +40,7 @@ resource "aws_route_table" "public" {
      }
 
      tags = {
-     Name = var.stack-public
+     Name = "RT Public Terraform"
      }
 }
 
@@ -51,11 +51,11 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_security_group" "sg" {
-      name = var.stack-sg
+      name = "SecurityGroup Terraform"
       description = "This is for ${var.stack}s security group"
       vpc_id = aws_vpc.vpc.id
       tags = {
-      Name = var.stack-sg
+      Name = "SG Terraform"
       }
 }
 

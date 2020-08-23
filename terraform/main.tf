@@ -4,12 +4,12 @@ resource "aws_instance" "ec2" {
   subnet_id = aws_subnet.subnet[0].id
   associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.sg.id]
-  key_name = "gigaops"
   tags = {
-    Name = var.stack-django-cms
+    Name = "Stack Django CMS"
   }
 }
 
+data "aws_caller_identity" "current" {}
 
 data "aws_ami" "packer_image" {
   most_recent = true
@@ -23,6 +23,6 @@ data "aws_ami" "packer_image" {
     name   = "virtualization-type"
     values = ["hvm"]
   }
+  owners = [data.aws_caller_identity.current.account_id]
 
-  owners = ["919315413656"] # Canonical
 }
